@@ -98,10 +98,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controllers\calificacionController.cs" />
     <Compile Include="controllers\estudianteAccessController.cs" />
     <Compile Include="controllers\EstudianteController.cs" />
     <Compile Include="controllers\LoginController.cs" />
     <Compile Include="controllers\ProfesorController.cs" />
+    <Compile Include="models\CalificacionModel.cs" />
+    <Compile Include="models\ComentarioModel.cs" />
     <Compile Include="models\connectionDB.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -139,6 +142,12 @@
     <Compile Include="views\profesorAccessForm.Designer.cs">
       <DependentUpon>profesorAccessForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="views\profesorCalificarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\profesorCalificarForm.Designer.cs">
+      <DependentUpon>profesorCalificarForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -162,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="views\profesorAccessForm.resx">
       <DependentUpon>profesorAccessForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\profesorCalificarForm.resx">
+      <DependentUpon>profesorCalificarForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -9,6 +9,8 @@ namespace proyecto_educacion.models
 {
     public class ProfesorModel
     {
+
+        // get y set
         public int Id { get; set; }
         public string Nom1 { get; set; }
         public string Nom2 { get; set; }
@@ -19,7 +21,7 @@ namespace proyecto_educacion.models
         public string Usuario { get; set; }
         public string Password { get; set; }
 
-        // Método para validar las credenciales de un profesor
+        // validar credenciales profesor
         public static bool ValidarCredenciales(string usuario, string contrasena)
         {
             bool resultado = false;
@@ -46,7 +48,7 @@ namespace proyecto_educacion.models
             return resultado;
         }
 
-        // Método para obtener el ID del profesor por su usuario y contraseña
+        // obtener el id del profesor por su usuario y contraseña
         public static int ObtenerIdProfesor(string usuario, string contrasena)
         {
             int idProfesor = 0;
@@ -76,7 +78,7 @@ namespace proyecto_educacion.models
             return idProfesor;
         }
 
-        // Método para obtener los datos de un profesor por su ID
+        // obtener datos del profesor por su id
         public static ProfesorModel GetProfesorById(int idProfesor)
         {
             ProfesorModel profesor = null;
@@ -104,7 +106,6 @@ namespace proyecto_educacion.models
                                     Email = reader["email_profesor"].ToString(),
                                     Usuario = reader["usr_profesor"].ToString(),
                                     Password = reader["pass_profesor"].ToString(),
-                                    // Aquí puedes agregar la foto si la tienes
                                 };
                             }
                         }
@@ -118,7 +119,7 @@ namespace proyecto_educacion.models
             return profesor;
         }
 
-        // Método para actualizar la información de un profesor
+        // actualizar la información de un profesor
         public static bool UpdateProfesor(ProfesorModel profesor)
         {
             bool resultado = false;

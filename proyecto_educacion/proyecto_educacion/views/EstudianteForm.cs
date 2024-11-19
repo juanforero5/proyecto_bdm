@@ -92,7 +92,7 @@ namespace proyecto_educacion.views
                 Email = txtEmail.Text,
                 Usuario = txtUsuario.Text,
                 Password = txtPassword.Text,
-                FechaCreacion = DateTime.Now // Fecha actual
+                FechaCreacion = DateTime.Now
             };
 
             byte[] foto = ConvertImageToByteArray(pictureBoxFoto.Image);
@@ -139,33 +139,28 @@ namespace proyecto_educacion.views
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            // Obtener el valor del documento de identidad (doc_estudiante) del campo de texto.
+            // instancia valor del documento de identidad (doc_estudiante)
             string documento = txtDocumento.Text;
 
-            // Verificar que el documento no esté vacío.
+            // si el documento no esta vacio
             if (!string.IsNullOrEmpty(documento))
             {
-                // Llamar al método DeleteEstudiante pasando el documento de identidad.
+                // eliminar estudiante por documento
                 if (estudianteController.DeleteEstudianteByDocumento(documento))
                 {
-                    // Si la eliminación fue exitosa, mostrar un mensaje de éxito.
+
                     MessageBox.Show("Estudiante eliminado exitosamente.");
 
-                    // Recargar la lista de estudiantes para reflejar los cambios.
                     CargarEstudiantes();
-
-                    // Limpiar los campos del formulario.
                     LimpiarCampos();
                 }
                 else
                 {
-                    // Si no se pudo eliminar el estudiante, mostrar un mensaje de error.
                     MessageBox.Show("Error al eliminar el estudiante.");
                 }
             }
             else
             {
-                // Si el documento no es válido (vacío), mostrar un mensaje.
                 MessageBox.Show("Selecciona un estudiante válido para eliminar.");
             }
         }
@@ -202,7 +197,7 @@ namespace proyecto_educacion.views
                 {
                     byte[] fotoBytes = (byte[])row.Cells["Foto"].Value;
 
-                    // Verificar que el arreglo de bytes no esté vacío
+                    // verificar que el campo es diferente de null
                     if (fotoBytes.Length > 0)
                     {
                         using (MemoryStream ms = new MemoryStream(fotoBytes))
@@ -212,12 +207,12 @@ namespace proyecto_educacion.views
                     }
                     else
                     {
-                        pictureBoxFoto.Image = null; // Si el arreglo está vacío, no mostramos ninguna imagen
+                        pictureBoxFoto.Image = null;
                     }
                 }
                 else
                 {
-                    pictureBoxFoto.Image = null; // Si el valor de la celda es nulo, eliminamos la imagen
+                    pictureBoxFoto.Image = null;
                 }
 
             }
@@ -230,8 +225,8 @@ namespace proyecto_educacion.views
 
         private void btnRegresar_Click(object sender, EventArgs e)
         {
-            this.Close(); // Cierra EstudianteForm
-            formularioPrevio.Show(); // Muestra el formulario previo
+            this.Close();
+            formularioPrevio.Show();
         }
     }
 }

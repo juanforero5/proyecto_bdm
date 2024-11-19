@@ -44,9 +44,14 @@ namespace proyecto_educacion.views
             this.label2 = new System.Windows.Forms.Label();
             this.txtTituloM = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtComentario = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnComentar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMateriales)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -94,7 +99,7 @@ namespace proyecto_educacion.views
             this.groupBox2.Controls.Add(this.txtTituloM);
             this.groupBox2.Location = new System.Drawing.Point(19, 78);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(539, 258);
+            this.groupBox2.Size = new System.Drawing.Size(758, 258);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Gestionar materiales";
@@ -163,7 +168,7 @@ namespace proyecto_educacion.views
             this.txtDescM.AccessibleDescription = "";
             this.txtDescM.Location = new System.Drawing.Point(159, 80);
             this.txtDescM.Name = "txtDescM";
-            this.txtDescM.Size = new System.Drawing.Size(362, 26);
+            this.txtDescM.Size = new System.Drawing.Size(569, 26);
             this.txtDescM.TabIndex = 7;
             this.txtDescM.Tag = "";
             // 
@@ -198,11 +203,52 @@ namespace proyecto_educacion.views
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.btnComentar);
+            this.groupBox3.Controls.Add(this.txtComentario);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Location = new System.Drawing.Point(19, 638);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(758, 139);
+            this.groupBox3.TabIndex = 5;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Dejar un comentario al material";
+            // 
+            // txtComentario
+            // 
+            this.txtComentario.AccessibleDescription = "";
+            this.txtComentario.Location = new System.Drawing.Point(159, 43);
+            this.txtComentario.Name = "txtComentario";
+            this.txtComentario.Size = new System.Drawing.Size(569, 26);
+            this.txtComentario.TabIndex = 23;
+            this.txtComentario.Tag = "";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(138, 20);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "Añadir comentario";
+            // 
+            // btnComentar
+            // 
+            this.btnComentar.Location = new System.Drawing.Point(10, 91);
+            this.btnComentar.Name = "btnComentar";
+            this.btnComentar.Size = new System.Drawing.Size(98, 31);
+            this.btnComentar.TabIndex = 22;
+            this.btnComentar.Text = "Comentar";
+            this.btnComentar.UseVisualStyleBackColor = true;
+            this.btnComentar.Click += new System.EventHandler(this.btnComentar_Click);
+            // 
             // estudianteAccessForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 640);
+            this.ClientSize = new System.Drawing.Size(800, 803);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -213,6 +259,8 @@ namespace proyecto_educacion.views
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMateriales)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,5 +283,9 @@ namespace proyecto_educacion.views
         private System.Windows.Forms.Button btnEditarM;
         private System.Windows.Forms.Button btnDeleteM;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnComentar;
+        private System.Windows.Forms.TextBox txtComentario;
+        private System.Windows.Forms.Label label5;
     }
 }

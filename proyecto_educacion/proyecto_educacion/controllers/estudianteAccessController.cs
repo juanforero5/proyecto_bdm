@@ -33,6 +33,19 @@ namespace proyecto_educacion.controllers
         {
             return MaterialModel.DeleteMaterial(idMaterial);
         }
+
+        public bool CrearComentario(ComentarioModel comentario)
+        {
+            try
+            {
+                return ComentarioModel.InsertComentario(comentario);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al crear el comentario: " + ex.Message);
+                return false;
+            }
+        }
     }
 }
 

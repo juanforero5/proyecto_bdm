@@ -6,6 +6,8 @@ namespace proyecto_educacion.models
 {
     public class MaterialModel
     {
+        // get y set
+
         public int IdMaterial { get; set; }
         public string TituloMaterial { get; set; }
         public string DescMaterial { get; set; }
@@ -13,6 +15,75 @@ namespace proyecto_educacion.models
         public DateTime FechaMaterial { get; set; }
         public int? IdCalificacion { get; set; }
         public int IdEstudiante { get; set; }
+        public string DescripcionCalificacion { get; set; }
+        public string NombreEstudiante { get; set; }
+
+
+        public static byte[] GetArchivoById(int idMaterial)
+        {
+            byte[] archivo = null;
+
+            using (var conn = new ConnectionBD().DataSource())
+            {
+                string query = "SELECT fichero_material FROM material WHERE id_material = @IdMaterial";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@IdMaterial", idMaterial);
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            archivo = (byte[])reader["fichero_material"];
+                        }
+                    }
+                }
+            }
+            return archivo;
+        }
+
+        // obtener todos los materiales para calificar
+
+        public static List<MaterialModel> GetAllMaterialesByEstudiante()
+        {
+            var materiales = new List<MaterialModel>();
+
+            using (var conn = new ConnectionBD().DataSource())
+            {
+                string query = @"
+            SELECT CONCAT(e.nom1_estudiante, ' ', e.ape1_estudiante) as estudiante, m.id_material, m.titulo_material, m.desc_material, m.fecha_material
+            from  material m
+            left join estudiante e
+            on m.id_estudianteE = e.id_estudiante";
+
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    //cmd.Parameters.AddWithValue("@IdEstudiante", idEstudiante);
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            materiales.Add(new MaterialModel
+                            {
+                                NombreEstudiante = reader["estudiante"].ToString(),
+                                IdMaterial = reader.GetInt32("id_material"),
+                                TituloMaterial = reader["titulo_material"].ToString(),
+                                DescMaterial = reader["desc_material"].ToString(),
+                                FechaMaterial = reader.GetDateTime("fecha_material")
+                                //IdCalificacion = reader.IsDBNull(reader.GetOrdinal("id_calificacionC")) ? (int?)null : reader.GetInt32("id_calificacionC"),
+                                //IdEstudiante = reader.GetInt32("id_estudianteE")
+                            });
+                        }
+                    }
+                }
+            }
+            return materiales;
+        }
+
+        // obtener materiales cargados por id de estudiante y join con calificacion
 
         public static List<MaterialModel> GetMaterialesByEstudianteId(int idEstudiante)
         {
@@ -20,7 +91,20 @@ namespace proyecto_educacion.models
 
             using (var conn = new ConnectionBD().DataSource())
             {
-                string query = "SELECT * FROM material WHERE id_estudianteE = @IdEstudiante";
+                string query = @"
+            SELECT 
+                m.id_material, 
+                m.titulo_material, 
+                m.desc_material, 
+                m.fecha_material,
+                m.id_estudianteE,
+                c.nota_calificacion, 
+                c.descripcion_calificacion
+            FROM material m
+            LEFT JOIN calificacion c
+            ON m.id_material = c.id_materialC
+            WHERE m.id_estudianteE = @IdEstudiante";
+
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@IdEstudiante", idEstudiante);
@@ -36,8 +120,11 @@ namespace proyecto_educacion.models
                                 TituloMaterial = reader["titulo_material"].ToString(),
                                 DescMaterial = reader["desc_material"].ToString(),
                                 FechaMaterial = reader.GetDateTime("fecha_material"),
-                                IdCalificacion = reader.IsDBNull(reader.GetOrdinal("id_calificacionC")) ? (int?)null : reader.GetInt32("id_calificacionC"),
-                                IdEstudiante = reader.GetInt32("id_estudianteE")
+
+                                // Reasignamos los campos del JOIN
+                                IdCalificacion = reader.IsDBNull(reader.GetOrdinal("nota_calificacion")) ? (int?)null : reader.GetInt32("nota_calificacion"),
+                                IdEstudiante = reader.GetInt32("id_estudianteE"),
+                                DescripcionCalificacion = reader["descripcion_calificacion"].ToString()
                             });
                         }
                     }
@@ -45,6 +132,7 @@ namespace proyecto_educacion.models
             }
             return materiales;
         }
+
 
         public static bool InsertMaterial(MaterialModel material)
         {

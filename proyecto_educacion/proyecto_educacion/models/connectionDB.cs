@@ -7,7 +7,7 @@ namespace proyecto_educacion.models
     {
         private readonly string connectionString = "server=127.0.0.1;database=proyecto_bdm;Uid=root;password=root;";
 
-        // Método para obtener una nueva conexión
+        // obtener una nueva conexión cada vez
         public MySqlConnection DataSource()
         {
             return new MySqlConnection(connectionString);
@@ -35,7 +35,7 @@ namespace proyecto_educacion.models
             MySqlConnection conn = null;
             try
             {
-                conn = DataSource();  // Se crea una nueva conexión
+                conn = DataSource(); 
                 ConnectOpened(conn);
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
@@ -49,7 +49,7 @@ namespace proyecto_educacion.models
             }
             finally
             {
-                if (conn != null) ConnectClosed(conn);  // Se cierra la conexión si está abierta
+                if (conn != null) ConnectClosed(conn);  //cierra la conexión si está abierta
             }
             return result;
         }

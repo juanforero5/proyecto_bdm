@@ -35,24 +35,24 @@ namespace proyecto_educacion.views
             {
                 MessageBox.Show("Inicio de sesión exitoso.");
 
-                // Obtener el ID del profesor
+                // obtener ID profesor
                 int idProfesor = 0;
                 if (rol == "Profesor")
                 {
-                    idProfesor = loginController.ObtenerIdProfesor(usuario, contrasena); // Obtener el ID del profesor
+                    idProfesor = loginController.ObtenerIdProfesor(usuario, contrasena);
                     if (idProfesor == 0)
                     {
                         MessageBox.Show("No se encontró un profesor con esas credenciales.");
-                        return; // Si no se encuentra el ID, detén el flujo
+                        return;
                     }
                     else
                     {
-                        // Ocultar el formulario de login
+
                         this.Hide();
                     }
                 }
 
-                // Obtener el ID del estudiante
+                // obtener ID estudiante
                 int idEstudiante = 0;
                 if (rol == "Estudiante")
                 {
@@ -60,28 +60,27 @@ namespace proyecto_educacion.views
                     if (idEstudiante == 0)
                     {
                         MessageBox.Show("No se encontró un estudiante con esas credenciales.");
-                        return; // Si no se encuentra el ID, detén el flujo
+                        return;
                     }
                     else
                     {
-                        // Ocultar el formulario de login
                         this.Hide();
                     }
                 }
 
                 
 
-                // Abrir el formulario correspondiente según el rol
+                // segun el rol abrir form
                 if (rol == "Estudiante")
                 {
-                    estudianteAccessForm estudianteForm = new estudianteAccessForm(idEstudiante); // Pasar el idEstudiante al formulario de estudiante
-                    estudianteForm.FormClosed += new FormClosedEventHandler(Form_FormClosed); // Cerrar el login cuando se cierre el formulario Estudiante
+                    estudianteAccessForm estudianteForm = new estudianteAccessForm(idEstudiante); // pasar id al form estudiantes
+                    estudianteForm.FormClosed += new FormClosedEventHandler(Form_FormClosed); // cerrar el login
                     estudianteForm.Show();
                 }
                 else if (rol == "Profesor")
                 {
-                    profesorAccessForm profesorForm = new profesorAccessForm(idProfesor); // Pasar el idProfesor al formulario de profesor
-                    profesorForm.FormClosed += new FormClosedEventHandler(Form_FormClosed); // Cerrar el login cuando se cierre el formulario Profesor
+                    profesorAccessForm profesorForm = new profesorAccessForm(idProfesor); // pasar id al form profesores
+                    profesorForm.FormClosed += new FormClosedEventHandler(Form_FormClosed); // cerrar el login
                     profesorForm.Show();
                 }
             }
@@ -93,7 +92,7 @@ namespace proyecto_educacion.views
 
         private void Form_FormClosed(object sender, FormClosedEventArgs e)
         {
-            // Cerrar el formulario de login cuando el formulario de Estudiante o Profesor se cierre
+            // cerrar el login cuando el form profesor o estudiante se cierra
             this.Close();
         }
 

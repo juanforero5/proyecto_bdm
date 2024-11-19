@@ -15,22 +15,22 @@ namespace proyecto_educacion.controllers
             loginModel = new LoginModel();
         }
 
-        // Método para validar el login
+        // valida usuario login
         public bool ValidarLogin(string usuario, string contrasena, string rol)
         {
             return loginModel.ValidarUsuario(usuario, contrasena, rol);
         }
 
-        // Método para obtener el id del profesor al validar las credenciales
+        // obtener el id del profesor luego de validar
         public int ObtenerIdProfesor(string usuario, string contrasena)
         {
-            return ProfesorModel.ObtenerIdProfesor(usuario, contrasena); // Llamada al modelo para obtener el ID
+            return ProfesorModel.ObtenerIdProfesor(usuario, contrasena);
         }
 
-        // Método para obtener el id del estudiante al validar las credenciales
+        // obtener el id del estudiante luego de validar
         public int ObtenerIdEstudiante(string usuario, string contrasena)
         {
-            return EstudianteModel.ObtenerIdEstudiante(usuario, contrasena); // Llamada al modelo para obtener el ID
+            return EstudianteModel.ObtenerIdEstudiante(usuario, contrasena);
         }
     }
 }

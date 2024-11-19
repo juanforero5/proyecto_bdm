@@ -10,7 +10,7 @@ namespace proyecto_educacion.models
     {
         private readonly ConnectionBD dbConnection = new ConnectionBD();
 
-        // Atributos del modelo
+        // get y set
         public int Id { get; set; }
         public string Nom1 { get; set; }
         public string Nom2 { get; set; }
@@ -23,7 +23,7 @@ namespace proyecto_educacion.models
         public byte[] Foto { get; set; }
         public DateTime FechaCreacion { get; set; }
 
-        // Método para obtener todos los estudiantes
+        // obtener todos los estudiantes
         public List<EstudianteModel> GetAll()
         {
             List<EstudianteModel> estudiantes = new List<EstudianteModel>();
@@ -60,7 +60,7 @@ namespace proyecto_educacion.models
             return estudiantes;
         }
 
-        // Método para crear un estudiante
+        // crear un estudiante
         public bool Create()
         {
             string sql = "INSERT INTO estudiante (nom1_estudiante, nom2_estudiante, ape1_estudiante, ape2_estudiante, doc_estudiante, email_estudiante, usr_estudiante, pass_estudiante, foto_estudiante, fechacrea_estudiante) VALUES (@Nom1, @Nom2, @Ape1, @Ape2, @Documento, @Email, @Usuario, @Password, @Foto, @FechaCreacion)";
@@ -84,7 +84,7 @@ namespace proyecto_educacion.models
             }
         }
 
-        // Método para actualizar un estudiante
+        // actualizar un estudiante
         public bool Update()
         {
             string sql = "UPDATE estudiante SET nom1_estudiante = @Nom1, nom2_estudiante = @Nom2, ape1_estudiante = @Ape1, ape2_estudiante = @Ape2, doc_estudiante = @Documento, email_estudiante = @Email, usr_estudiante = @Usuario, pass_estudiante = @Password, foto_estudiante = @Foto WHERE doc_estudiante = @Documento";
@@ -108,7 +108,7 @@ namespace proyecto_educacion.models
             }
         }
 
-        // Método para eliminar un estudiante
+        // eliminar un estudiante
         public bool Delete(string documento)
         {
             bool result = false;

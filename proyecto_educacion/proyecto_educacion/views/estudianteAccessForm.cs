@@ -25,21 +25,71 @@ namespace proyecto_educacion.views
         private void estudianteAccessForm_Load(object sender, EventArgs e)
         {
             CargarMateriales();
+            LimpiarCamposMaterial();
+            txtComentario.Enabled = false;
+            btnComentar.Enabled = false;
         }
 
         private void CargarMateriales()
         {
+            // obtener los materiales del estudiante
             List<MaterialModel> materiales = EstudianteAccessController.ObtenerMaterialesEstudiante(idEstudiante);
-            dataGridViewMateriales.DataSource = materiales;
 
-            // Configuración de las columnas del DataGridView
-            dataGridViewMateriales.Columns["IdMaterial"].Visible = false;
-            dataGridViewMateriales.Columns["TituloMaterial"].HeaderText = "Titulo";
-            dataGridViewMateriales.Columns["DescMaterial"].HeaderText = "Descripción";
-            dataGridViewMateriales.Columns["FechaMaterial"].HeaderText = "Fecha publicación";
-            dataGridViewMateriales.Columns["IdCalificacion"].HeaderText = "id_calificación";
-            dataGridViewMateriales.Columns["IdEstudiante"].HeaderText = "id_estudiante";
+
+            dataGridViewMateriales.AutoGenerateColumns = false;
+            dataGridViewMateriales.Columns.Clear();
+
+
+            dataGridViewMateriales.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "TituloMaterial",
+                HeaderText = "Título",
+                Name = "TituloMaterial"
+            });
+
+
+            dataGridViewMateriales.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "DescMaterial",
+                HeaderText = "Descripción",
+                Name = "DescMaterial"
+            });
+
+
+            dataGridViewMateriales.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "FechaMaterial",
+                HeaderText = "Fecha publicación",
+                Name = "FechaMaterial"
+            });
+
+
+            dataGridViewMateriales.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "IdCalificacion",
+                HeaderText = "Calificación",
+                Name = "IdCalificacion"
+            });
+
+
+            dataGridViewMateriales.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "DescripcionCalificacion",
+                HeaderText = "Observaciones",
+                Name = "DescripcionCalificacion"
+            });
+
+            dataGridViewMateriales.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "IdMaterial",
+                HeaderText = "Id Material",
+                Name = "IdMaterial",
+                Visible = false
+            });
+
+            dataGridViewMateriales.DataSource = materiales;
         }
+
 
         private void btnCreateM_Click(object sender, EventArgs e)
         {
@@ -73,7 +123,7 @@ namespace proyecto_educacion.views
 
         private void btnSeleccionarArchivo_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = "Archivos PDF|*.pdf|Archivos Word|*.docx|Archivos Excel|*.xlsx|Imágenes PNG|*.png";
+            openFileDialog1.Filter = "Archivos PDF|*.pdf|Archivos Word|*.docx|Archivos Excel|*.xlsx|Imágenes PNG|*.png|Archivos TXT|*.txt";
             openFileDialog1.Title = "Seleccione un archivo";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -90,6 +140,9 @@ namespace proyecto_educacion.views
                 txtTituloM.Text = row.Cells["TituloMaterial"].Value.ToString();
                 txtDescM.Text = row.Cells["DescMaterial"].Value.ToString();
                 idMaterialSeleccionado = Convert.ToInt32(row.Cells["IdMaterial"].Value);
+
+                txtComentario.Enabled = true;
+                btnComentar.Enabled = true;
             }
         }
 
@@ -123,14 +176,15 @@ namespace proyecto_educacion.views
 
         private void LimpiarCamposMaterial()
         {
-            // Limpiar los campos de texto
+            // limpiar campos
             txtTituloM.Clear();
             txtDescM.Clear();
+            lblTituloFile.Text = "Cargar material";
 
-            // Limpiar el archivo seleccionado
+            // limpiar file seleccionado
             openFileDialog1.FileName = string.Empty;
 
-            // Resetear el id del material seleccionado
+            // restaurar id material seleccionado
             idMaterialSeleccionado = 0;
         }
 
@@ -172,6 +226,37 @@ namespace proyecto_educacion.views
                         MessageBox.Show("Error al eliminar el material.");
                     }
                 }
+            }
+        }
+
+        private void btnComentar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtComentario.Text))
+            {
+                MessageBox.Show("Por favor, escriba un comentario antes de enviarlo.");
+                return;
+            }
+
+            var comentario = new ComentarioModel
+            {
+                TxtComentario = txtComentario.Text,
+                FechaComentario = DateTime.Now,
+                IdEstudianteCom = idEstudiante,
+                IdMaterialCom = idMaterialSeleccionado
+            };
+
+            bool resultado = EstudianteAccessController.CrearComentario(comentario);
+
+            if (resultado)
+            {
+                MessageBox.Show("Comentario agregado exitosamente.");
+                txtComentario.Clear();
+                txtComentario.Enabled = false;
+                btnComentar.Enabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Error al agregar el comentario.");
             }
         }
     }
